@@ -18,8 +18,11 @@ function is_presentation(model)
    local sheets = model.doc:sheets()
    for i=1,sheets:count() do
       local sheet = sheets:sheet(i)
-      if string.find(sheet:name(), "presentation") then
-         return true
+      local name = sheet:name()
+      if name ~= nil then
+         if string.find(name, "presentation") then
+            return true
+         end
       end
    end
    return false

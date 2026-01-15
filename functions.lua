@@ -109,3 +109,9 @@ function _G.MODEL:runLatex()
    clean_labels(self)
    return self:custom_backup_runLatex()
 end
+
+function _G.printTable(tbl)
+    for key, value in pairs(tbl) do
+        print(key, value)
+    end
+end

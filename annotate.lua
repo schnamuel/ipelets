@@ -61,7 +61,14 @@ function run(model)
     end
 
     model.snap.grid_visible = false
+    model.snap.snapgrid = false
+    model.snap.snapauto =true
     model:setSnap()
+    model.ui:update()
+    local a = model.attributes
+    a.stroke = "signalblue1"
+    a.pen = "ultrafat"
+     model.ui:setAttributes(model.doc:sheets(), a)
     model.ui:update()
     model:setPage()
     model:autoRunLatex()
