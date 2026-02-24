@@ -1,4 +1,6 @@
-label="split itemize"
+label="beamer to ipe"
+
+about= [[Decomposes a textbox consisting of text inside itemize or enumeration evironments into singular items.]]
 
 V = ipe.Vector
 
@@ -145,7 +147,7 @@ local function split_latex_semantic(input)
     return blocks, types
 end
 
-function split(model)
+function run(model)
     local p = model:page()
 	local prim = p:primarySelection()
     if not prim then
@@ -181,11 +183,11 @@ function split(model)
 
 end
 
-methods = {
-    { label = "split itemize", run = split},
-  }
+-- methods = {
+--     { label = "split itemize", run = split},
+--   }
 
 
 ---------------------------------------------
 
-shortcuts.ipelet_1_split_itemize = "Alt+X"
+shortcuts.ipelet_1_beamer_to_ipe = "Alt+X"
