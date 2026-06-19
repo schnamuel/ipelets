@@ -144,6 +144,7 @@ local function set_item(model)
        undo = _G.revertOriginal
      }
     t.redo = function (t, doc)
+        local p = doc[t.pno]
         for _,i in ipairs(selection) do
             if p[i]:type() == "text" then
                     p[i]:set("textstyle", style_name)

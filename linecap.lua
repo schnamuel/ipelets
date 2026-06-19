@@ -15,6 +15,7 @@ local function set_linecap(model, num)
        undo = _G.revertOriginal
      }
     t.redo = function (t, doc)
+        local p = doc[t.pno]
         for _,i in ipairs(selection) do
             if p[i]:type() == "path" then
                 if num ==1 then
