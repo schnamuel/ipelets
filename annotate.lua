@@ -32,13 +32,32 @@ function get_first_page_size(file_path)
     return nil, nil
 end
 
-function run(model)
+function set_attributes(model)
+    model.snap.grid_visible = false
+    model.snap.snapgrid = false
+    model.snap.snapauto =true
+    model.snap.pretty_display=true
+    model.ui:setActionState("grid_visible", false)
+    model.ui:setActionState("snapgrid", false)
+    model.ui:setActionState("snapauto", true)
+    model.ui:setActionState("pretty_display", true)
+    model:setSnap()
+    local a = model.attributes
+    a.stroke = "signalblue1"
+    a.pen = "ultrafat"
+    a.textsize = "footnote"
+    model.ui:setAttributes(model.doc:sheets(), a)
+    model.ui:update()
+    model:setPage()
+end
+
+function annotate(model)
     local filter_save = {"PDF (*.pdf)", "*.pdf" }
     local file,_ = ipeui.fileDialog(nil, "open", "Choose the file to annotate", filter_save, nil, nil, 1)
 
     if file == nil then return end
     local width,height = get_first_page_size(file)
-    local layout = [[<ipestyle name="layout"><layout paper="]] .. width .. " " .. height .. [[" origin="0 0" frame="]] .. width .. " " .. height ..[["/></ipestyle>]]
+    local layout = [[<ipestyle name="annotate"><preamble>\usepackage{graphicx}</preamble><textstyle name="normal" begin="\flushleft{}" end=""/><layout paper="]] .. width .. " " .. height .. [[" origin="0 0" frame="]] .. width .. " " .. height ..[["/></ipestyle>]]
     local sheet = ipe.Sheet(nil, layout)
 
     local pages = get_pdf_page_count(file)
@@ -59,19 +78,15 @@ function run(model)
         p:insert(nil,obj,nil,"pdf")
         doc:append(p)
     end
-
-    model.snap.grid_visible = false
-    model.snap.snapgrid = false
-    model.snap.snapauto =true
-    model:setSnap()
-    model.ui:update()
-    local a = model.attributes
-    a.stroke = "signalblue1"
-    a.pen = "ultrafat"
-     model.ui:setAttributes(model.doc:sheets(), a)
-    model.ui:update()
-    model:setPage()
+    set_attributes(model)
     model:autoRunLatex()
+    model:action_fit_page()
 end
 
+methods = {
+    { label = "annotate new document", run=annotate},
+    { label = "set annotate attributes", run=set_attributes},
+  }
+
 shortcuts.ipelet_1_annotate = "Ctrl+Alt+O"
+shortcuts.ipelet_2_annotate = "Ctrl+Alt+Shift+O"
