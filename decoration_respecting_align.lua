@@ -439,6 +439,15 @@ function ttb_skip(model, selection)
   return dy
 end
 
+function btt_skip(model, selection)
+  local dy = ttb_skip(model,selection)
+  local diff = dy[#selection]
+  for i =1,#selection do
+    dy[i] = dy[i]-diff
+  end
+  return dy
+end
+
 function ttb_equal_gaps(model, selection)
   local dy = { 0 }
   local total = 0.0
@@ -599,6 +608,7 @@ methods = {
   { label = "set skip...", run = set_skip },
   { label = "distribute horizontally in grid", run=ltr, compute = ltr_grid },
   { label = "distribute vertically in grid", run=ttb, compute = ttb_grid },
+  { label = "distribute bottom to top", run=ttb, compute = btt_skip },
 }
 
 ----------------------------------------------------------------------
@@ -612,7 +622,7 @@ shortcuts.ipelet_5_align = nil
 shortcuts.ipelet_6_align = nil
 shortcuts.ipelet_7_align = nil
 shortcuts.ipelet_10_align = "Ctrl+Alt+Shift+H" --distribute horizontally
-shortcuts.ipelet_14_align = "Ctrl+Alt+Shift+T" --distribute with skip
+shortcuts.ipelet_14_align = nil--distribute with skip
 shortcuts.ipelet_15_align = "Ctrl+Alt+Shift+V" --distribute vertically
 
 shortcuts.ipelet_1_decoration_respecting_align = "Shift+T" --align top
@@ -628,3 +638,4 @@ shortcuts.ipelet_14_decoration_respecting_align = "Alt+Shift+T" --distribute wit
 shortcuts.ipelet_15_decoration_respecting_align = "Alt+Shift+V" --distribute vertically
 shortcuts.ipelet_20_decoration_respecting_align = "Alt+Shift+G" --distribute horizontally on grid
 shortcuts.ipelet_21_decoration_respecting_align = "Ctrl+Alt+Shift+G" --distribute vertically on grid
+shortcuts.ipelet_22_decoration_respecting_align = "Ctrl+Alt+Shift+T" --distribute with skip from bottom to top
