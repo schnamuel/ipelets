@@ -26,7 +26,7 @@ function swap_colors(model)
  end
 
  methods = {
-    { label = "pick_colors", run = pick_colors},
+    { label = "pick colors", run = pick_colors},
     { label = "swap colors", run = swap_colors},
   }
 
