@@ -45,6 +45,11 @@ function flip_arc(model)
         return
     end
 
+    if p[prim]:type() ~= "path" then
+        model.ui:explain("selection is not an arc")
+        return
+    end
+
     local shape = p[prim]:shape()
     if (#shape ~= 1 or shape[1].type ~= "curve") then
         model.ui:explain("selection is not an arc")
