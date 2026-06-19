@@ -104,11 +104,6 @@ methods = {
 }
 ----------------------------------------------------------------------
 
--- shortcuts.ipelet_1_my_group = shortcuts.group
--- shortcuts.ipelet_2_my_group = shortcuts.ungroup
--- shortcuts.group = nil
--- shortcuts.ungroup = nil
-
 
 function _G.MODEL:saction_group()
 	group(self)
