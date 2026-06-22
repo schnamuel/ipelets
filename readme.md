@@ -5,7 +5,7 @@
 * **change width**: Allows to change the width of multiple minipages at the same time.
 * **custom parser**: Some helper functions. Necessary for **layer sensitive grouping**
 * **decoration_respecting_align**: Treats decorations as part of the bounding box when aligning objects. Also adds some new ways to align objects.
-* **join paths**: Adds a shortcut to joinh multiple paths. 
+* **join paths**: Adds a shortcut to join multiple paths. 
 * **layer sensitive grouping**: Overwrites the default Ipe behaviour vor grouping and ungeouping. A group is always places on the layer of the primary selection. Upon ungrouping the objects are places on their original layer (if that layer still exists). Requires **custom parser**. Might clash with other ipelets using the custom tag.
 * **linecap**: Adds a shortcut for toggeling the linecap of a path between *round* and *normal*.
 * **link**: Adds a shortcut for adding a link to an object.
