@@ -12,7 +12,7 @@
 * **list shortcuts**: Displays all shortcuts.
 * **manipulate colors**: Grayscales or inverts the colors of the selected objects.
 * **my goodies**: Implements slightly differrent behaviour for some of the functions from the classical **goodies** ipelet. The *regular k-gon* now creates n-gons such that one side is horizontal. The other functions operate on each selected object individually, i.e., *precise rotate* rotates each object around its own center instead of the center of the whole selection.
-* **pick marks**: Overwrites the Ipe behaviour for picking attributs of a mark. It now picks the markshape in addition to the other attributes.
+* **pick marks**: Overwrites the Ipe behaviour for picking attributes of a mark. It now picks the markshape in addition to the other attributes.
 * **polygons**: Allows to reverse all arrows in the selection or to change a selected path to a closed polygon.
 * **put marks in front**: Puts all marks on the current page in the front.
 * **qr code**: Generates a qr code for a given link with the qrcode latex package. 
