@@ -48,3 +48,4 @@ methods = {
 
 --------------------------
 shortcuts.ipelet_1_put_marks_in_front = "Alt+Shift+F"
+shortcuts.ipelet_2_put_marks_in_front = "Ctrl+Alt+Shift+F"
