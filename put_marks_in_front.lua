@@ -2,7 +2,7 @@ label = "Put marks in the front"
 
 revertOriginal = _G.revertOriginal
 
-function run(model)
+function run(model, num)
     local t = { 
         label = "put marks in the front",
 	    pno = model.pno,
@@ -15,7 +15,7 @@ function run(model)
     local marks = {}
 
     for objno, obj, _, layer in p:objects() do
-        if obj:get("markshape") ~= "undefined" then
+        if obj:get("markshape") ~= "undefined" and (num == 1 or p:select(objno)) then
             table.insert(marks, {p:layerOf(objno), obj:clone(), p:select(objno)})
         else
             table.insert(objects, {p:layerOf(objno), obj:clone(),p:select(objno)})
@@ -40,6 +40,11 @@ function run(model)
     end
     model:register(t)
 end
+
+methods = {
+    { label = "put all marks in the front"},
+    { label = "put only marks in selection in front"},
+  }
 
 --------------------------
 shortcuts.ipelet_1_put_marks_in_front = "Alt+Shift+F"
