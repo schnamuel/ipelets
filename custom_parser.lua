@@ -88,13 +88,24 @@ function _G.editCustom(obj, tag, content)
     end
 end
 
+function contains_image(obj)
+    if obj:type() == "image" then return true end
+    if obj:type() == "group" then
+        for _,object in ipairs(obj:elements()) do
+            if contains_image(object) then return true end
+        end
+    end
+    return false
+end
+
 function clean_labels(model)
     local doc = model.doc
     for j = 1, #doc do
         for i, obj, sel, layer in doc[j]:objects() do
             local custom = obj:getCustom()
-            if custom == empty_string then 
-                local xml = obj:xml():gsub('custom="[^"]*"', 'custom=""', 1)
+            --unfortunately it seems like one can not edit image objects or groups that contain an image object as xml because it messes up the mapping between the object and the bitmap 
+            if custom == empty_string and not contains_image(obj) then 
+                local xml = obj:xml():gsub('custom="' .. empty_string .. '"', 'custom=""', 1)
 			    obj = _G.ipe.Object(xml)
                 doc[j]:replace(i, obj)
             end
