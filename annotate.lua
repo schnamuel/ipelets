@@ -1,5 +1,6 @@
 label = "annotate"
 
+
 function get_pdf_page_count(file_path)
     local handle = _G.io.popen('pdfinfo "' .. file_path .. '"')
     if not handle then return nil end
@@ -57,7 +58,7 @@ function annotate(model)
 
     if file == nil then return end
     local width,height = get_first_page_size(file)
-    local layout = [[<ipestyle name="annotate"><preamble>\usepackage{graphicx}</preamble><textstyle name="normal" begin="\flushleft{}" end=""/><layout paper="]] .. width .. " " .. height .. [[" origin="0 0" frame="]] .. width .. " " .. height ..[["/></ipestyle>]]
+    local layout = [[<ipestyle name="annotate"><preamble>\usepackage{graphicx}</preamble><textstyle name="normal" begin="\flushleft{}" end=""/><layout paper="]] .. width + 400 .. " " .. height .. [[" origin="200 0" frame="]] .. width .. " " .. height ..[["crop="no"/></ipestyle>]]
     local sheet = ipe.Sheet(nil, layout)
 
     local pages = get_pdf_page_count(file)
