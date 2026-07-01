@@ -88,8 +88,6 @@ function change_directory(model)
     local file,_ = ipeui.fileDialog(nil, "open", "Choose the adjusted file", filter_save, nil, nil, 1)
     if file == nil then return end
     local doc = model.doc
-    local sheets = model.doc:sheets()
-
     for j =1,#doc do
         local p = doc[j]
         for i, _, _ , _  in p:objects() do
@@ -99,6 +97,7 @@ function change_directory(model)
             end
         end
     end
+    model:autoRunLatex()
 end
 
 methods = {
