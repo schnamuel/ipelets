@@ -83,9 +83,28 @@ function annotate(model)
     model:action_fit_page()
 end
 
+function change_directory(model)
+    local filter_save = {"PDF (*.pdf)", "*.pdf" }
+    local file,_ = ipeui.fileDialog(nil, "open", "Choose the adjusted file", filter_save, nil, nil, 1)
+    if file == nil then return end
+    local doc = model.doc
+    local sheets = model.doc:sheets()
+
+    for j =1,#doc do
+        local p = doc[j]
+        for i, _, _ , _  in p:objects() do
+            if p:layerOf(i) == "pdf" then
+                local xml = [[<text pos="0 0">\includegraphics[page=]] .. j .. ']{' .. file ..'}</text>'
+                p:replace(i, _G.ipe.Object(xml))
+            end
+        end
+    end
+end
+
 methods = {
     { label = "annotate new document", run=annotate},
     { label = "set annotate attributes", run=set_attributes},
+    { label ="adjust directory", run=change_directory}
   }
 
 shortcuts.ipelet_1_annotate = "Ctrl+Alt+O"
