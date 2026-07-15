@@ -57,6 +57,11 @@ function annotate(model)
     local file,_ = ipeui.fileDialog(nil, "open", "Choose the file to annotate", filter_save, nil, nil, 1)
 
     if file == nil then return end
+
+    if config.platform == "win" then
+        file = file:gsub("\\", "/")
+    end
+
     local width,height = get_first_page_size(file)
     local layout = [[<ipestyle name="annotate"><preamble>\usepackage{graphicx}</preamble><textstyle name="normal" begin="\flushleft{}" end=""/><layout paper="]] .. width + 400 .. " " .. height .. [[" origin="200 0" frame="]] .. width .. " " .. height ..[["crop="no"/></ipestyle>]]
     local sheet = ipe.Sheet(nil, layout)
