@@ -37,20 +37,23 @@ local function getColor(sheets, color1, color2)
 end
 
 function run(model, num)
-    local t = { 
-        label = methods[num].label,
-	    pno = model.pno,
-	    original = model:page():clone(),
-	    undo = _G.revertOriginal,
-    }
-    t.redo = function(t, doc)
-    local p = doc[t.pno]
-	local selection = model:selection()
+    local p = model:page()
+    local s = model:getString("Enter the distance between two horizontally or vertically adjacent vertices", "Create grid", model.snap.gridsize)
+    local offset = tonumber(s)
+    if not offset then 
+        model:warning("Please enter a valid number.")
+        return
+    end
+
+    if offset <= 0 then
+        model:warning("Please enter a number larger than 0.")
+        return
+    end
     local sheets = model.doc:sheets()
     local marks = {}
 
     --add all marks in a table
-    for _,i in ipairs(selection) do
+    for _,i in ipairs(model:selection()) do
         if p[i]:type() == "reference" then
             local position = p[i]:matrix() * p[i]:position()
             
@@ -64,7 +67,6 @@ function run(model, num)
     end
 
     local edges = {}
-    local offset = model.snap.gridsize
     
     for key, color in pairs(marks) do
 
@@ -81,10 +83,25 @@ function run(model, num)
                 local curve = { type="curve", closed = false, {type="segment", pos2,pos1} }
                 local a = model.attributes
                 a.stroke = getColor(sheets,color, marks[candidate])
-                p:insert(nil, ipe.Path(model.attributes, { curve } ), 0, p:layerOf(p:primarySelection()))
+                edges[#edges+1] = ipe.Path(model.attributes, { curve } )
             end
         end 
     end
+
+    local t = { 
+        label = methods[num].label,
+	    pno = model.pno,
+	    original = model:page():clone(),
+	    undo = _G.revertOriginal,
+        edges = edges,
+        layer = p:layerOf(p:primarySelection())
+    }
+    t.redo = function(t, doc)
+    local p = doc[t.pno]
+    for _,edge in ipairs(edges) do
+        p:insert(nil, edge, 0, t.layer)
+    end
+    
 end
     model:register(t)
 end
