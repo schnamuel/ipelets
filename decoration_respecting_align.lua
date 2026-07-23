@@ -546,7 +546,7 @@ function ttb(model, num)
 			end)
 
   if #selection == 1 or
-    #selection == 2 and methods[num].compute ~= ttb_skip and methods[num].compute ~= ttb_grid then
+    #selection == 2 and methods[num].compute ~= ttb_skip and methods[num].compute ~= ttb_grid and methods[num].compute ~= btt_skip then
     model.ui:explain("nothing to distribute")
     return
   end
