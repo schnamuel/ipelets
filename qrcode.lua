@@ -6,7 +6,7 @@ function run(model)
     local url = model:getString("Enter url", "Create qr code", nil)
     if not url then return end
     if url:match("^%s*$)") then url = "" end
-    obj = ipe.Text({}, "\\qrcode{" .. url .. "}", model.ui:pos())  
+    obj = ipe.Text(model.attributes, "\\qrcode{" .. url .. "}", model.ui:pos())  
     obj:set("transformations", "affine")
     obj = ipe.Group({obj})
     model:creation("create qr code", obj)
