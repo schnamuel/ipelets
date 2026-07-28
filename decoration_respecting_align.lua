@@ -482,7 +482,8 @@ function ttb_grid(model, selection, doc)
   local skip = (frame.y - total) / (#selection + 1)
 
   local ytarget = skip
-  for i = 1,#selection do
+  for k = 1,#selection do
+    i = #selection + 1 - k
     local j = selection[i]
     local box = adjusted_bbox(model,j)
     dy[i] = ytarget - box[2]
