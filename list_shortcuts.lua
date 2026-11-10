@@ -147,6 +147,14 @@ local name_map = {
     ["developer_list_shortcuts"] = "List shortcuts",
 }
 
+function find_ipelet(name)
+	for _, ipelet in pairs(_G.ipelets) do
+	   if ipelet.name == name then
+		  return(ipelet)
+	   end
+	end
+ end
+
 local button = false
 
 local saved_shortcuts_by_key = {}
@@ -167,12 +175,6 @@ function sort_by_shortcut(d)
         by_key = true
     end
 
-    -- table.sort(saved_shortcuts, function (a,b)
-    --             local atemp = string.match(a, "'(.-)'")
-    --             local btemp = string.match(b, "'(.-)'")
-    --             return atemp < btemp
-	-- 		end)
-
 end
 
 function run(model)
@@ -182,14 +184,16 @@ function run(model)
         local name = label
         if string.find(name, "ipelet_") then
             name = name:gsub("^ipelet_%d+_", "")
-            local ipelet = _G.find_ipelet(name)
+            local ipelet = find_ipelet(name)
             if ipelet ~= nil then 
                 if ipelet.label ~= nil then
                     name = ipelet.label
                 end
                 if ipelet.methods ~= nil then
                     local number = tonumber(label:gsub("%D", ""))
-                    name = "(" .. name ..  ") " .. ipelet.methods[number].label
+                    if ipelet.methods[number] ~= nil then
+                        name = "(" .. name ..  ") " .. ipelet.methods[number].label
+                    end
                 end
             end
         else
@@ -213,21 +217,6 @@ end)
 
     local s = table.concat(saved_shortcuts, "\n")
     s = s:gsub("\n$", "")
-
-    -- if not was_opened then
-    --     local d = ipeui.Dialog(win, "Ipe: Shortcuts")
-    --     d:add("text", "text", {read_only=true }, 1, 1)
-    --     d:set("text", "To properly show all shortcuts, we need to open a dummy window first.")
-    --     d:addButton("ok", "Ok", "accept")
-    --     d:execute()
-    --     was_opened = true
-    -- end
-
-    -- d = ipeui.Dialog(win, "Ipe: Shortcuts")
-    -- d:add("text", "text", {read_only=true }, 1, 1)
-    -- d:set("text", s)
-    -- d:addButton("ok", "Ok", "accept")
-    -- d:execute(prefs.latexlog_size)
 
     d = ipeui.Dialog(win, "Shortcuts")
     d:add("list", "list", {}, 2, 1)
