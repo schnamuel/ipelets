@@ -232,7 +232,3 @@ end)
         button = false
     end
 end
-
-------------------------------------------
-
-shortcuts.ipelet_1_list_shortcuts = "H"
