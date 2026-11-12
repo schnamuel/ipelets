@@ -6,6 +6,8 @@ about = [[
 This ipelet changes the group and ungroup operations of ipe to not change the layers of the objects
 ]]
 
+local default = false
+
 function group(model)
 	local p = model:page()
 	local selection = model:selection()
@@ -96,19 +98,42 @@ function group(model)
 	
   end
 
+
+function toggle(model)
+	default = not default
+end
+
 ----------------------------------------------------------------------
 
 methods = {
   { label = "group", run = group },
   { label = "ungroup", run = ungroup },
+  { label = "toggle default grouping",  run = toggle}
 }
 ----------------------------------------------------------------------
 
+<<<<<<< Updated upstream
+=======
+function _G.MODEL:backup_group() end
+_G.MODEL.backup_group = _G.MODEL.saction_group
+function _G.MODEL:backup_ungroup() end
+_G.MODEL.backup_ungroup = _G.MODEL.saction_ungroup
+>>>>>>> Stashed changes
 
 function _G.MODEL:saction_group()
-	group(self)
+	if default then 
+		_G.MODEL.backup_group(self)
+	else 
+		group(self)
+	end
 end
 
 function _G.MODEL:saction_ungroup()
-	ungroup(self)
+	if default then 
+		_G.MODEL.backup_ungroup(self)
+	else 
+		ungroup(self)
+	end
 end
+
+shortcuts.ipelet_3_layer_sensitive_grouping = "Ctrl+Alt+G"
