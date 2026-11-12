@@ -112,13 +112,10 @@ methods = {
 }
 ----------------------------------------------------------------------
 
-<<<<<<< Updated upstream
-=======
 function _G.MODEL:backup_group() end
 _G.MODEL.backup_group = _G.MODEL.saction_group
 function _G.MODEL:backup_ungroup() end
 _G.MODEL.backup_ungroup = _G.MODEL.saction_ungroup
->>>>>>> Stashed changes
 
 function _G.MODEL:saction_group()
 	if default then 
